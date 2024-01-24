@@ -5,6 +5,7 @@ import Main from "./components/Main/Main";
 import Loader from "./components/Loader/Loader";
 import Error from "./components/Error/Error";
 import StartScreen from "./components/StartScreen/StartScreen";
+import Question from "./components/Question/Question";
 import { useReducer } from "react";
 
 // The reason we use reducer:
@@ -29,6 +30,11 @@ function reducer(state, action) {
       return {
         ...state,
         status: "error",
+      };
+    case "start":
+      return {
+        ...state,
+        status: "active",
       };
     default:
       throw new Error("Action unknown!");
@@ -62,8 +68,9 @@ function App() {
         {state.status === "loading" && <Loader />}
         {state.status === "error" && <Error />}
         {state.status === "ready" && (
-          <StartScreen questionsNum={questionsNum} />
+          <StartScreen questionsNum={questionsNum} dispatch={dispatch} />
         )}
+        {state.status === "active" && <Question />}
       </Main>
     </div>
   );

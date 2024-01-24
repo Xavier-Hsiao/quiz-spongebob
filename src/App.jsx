@@ -2,6 +2,9 @@ import { useEffect } from "react";
 import styles from "./App.module.scss";
 import Header from "./components/Header/Header";
 import Main from "./components/Main/Main";
+import Loader from "./components/Loader/Loader";
+import Error from "./components/Error/Error";
+import StartScreen from "./components/StartScreen/StartScreen";
 import { useReducer } from "react";
 
 // The reason we use reducer:
@@ -34,6 +37,7 @@ function reducer(state, action) {
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
+  const questionsNum = state.questions.length;
   // Handle side effect: fetch questions data
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -54,7 +58,13 @@ function App() {
   return (
     <div className={styles.app}>
       <Header />
-      <Main />
+      <Main>
+        {state.status === "loading" && <Loader />}
+        {state.status === "error" && <Error />}
+        {state.status === "ready" && (
+          <StartScreen questionsNum={questionsNum} />
+        )}
+      </Main>
     </div>
   );
 }

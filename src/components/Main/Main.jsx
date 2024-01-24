@@ -1,10 +1,9 @@
 import styles from "./Main.module.scss";
 
-export default function Main() {
+export default function Main({ children }) {
   return (
     <main className={styles.main}>
-      <p>1/15</p>
-      <p>Question?</p>
+      {children}
     </main>
-  )
+  );
 }

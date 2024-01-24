@@ -1,0 +1,15 @@
+@use "./styles/theme.module.scss";
+
+body {
+  min-height: 100vh;
+  padding: 3.2rem;
+  background-color: theme.$background;
+  color: theme.$accent;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}

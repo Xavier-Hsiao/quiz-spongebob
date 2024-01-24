@@ -1,0 +1,5 @@
+@use "../../styles/theme.module.scss";
+
+.main {
+  color: theme.$light;
+}

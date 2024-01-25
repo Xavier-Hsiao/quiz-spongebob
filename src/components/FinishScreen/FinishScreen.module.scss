@@ -16,3 +16,23 @@
   text-align: center;
   margin-bottom: 4.8rem;
 }
+
+.btn {
+  display: block;
+  color: theme.$light;
+  font-size: 1rem;
+  font-weight: bold;
+  border: 2px solid theme.$warning;
+  background-color: theme.$warning;
+  padding: 1rem 2rem;
+  cursor: pointer;
+  border-radius: 100px;
+  transition: 0.5s;
+  float: right;
+
+  &:hover {
+    transform: translateX(1.2rem);
+    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px,
+      rgba(0, 0, 0, 0.22) 0px 10px 10px;
+  }
+}

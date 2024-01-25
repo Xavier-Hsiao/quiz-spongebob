@@ -1,6 +1,11 @@
 import styles from "./FinishScreen.module.scss";
 
-export default function FinishScreen({ points, maxPoints, highScore }) {
+export default function FinishScreen({
+  points,
+  maxPoints,
+  highScore,
+  dispatch,
+}) {
   const percentage = (points / maxPoints) * 100;
 
   let emoji;
@@ -17,6 +22,10 @@ export default function FinishScreen({ points, maxPoints, highScore }) {
         %)
       </p>
       <p className={styles.highScore}>你的最高分紀錄：{highScore}</p>
+      <button
+        className={styles.btn}
+        onClick={() => dispatch({ type: "reset" })}
+      >重新開始</button>
     </>
   );
 }

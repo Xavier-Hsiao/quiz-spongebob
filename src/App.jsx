@@ -21,9 +21,14 @@ const initialState = {
   currQuestion: 0,
   // Keep track of the current answer, should be an array index
   currAnswer: null,
+  // Keep track of user scores
+  points: 0,
 };
 
 function reducer(state, action) {
+  // We only have current question index in state object. But for points increment validation, we have to access to question object in questions array to get the correctOption property. That's why we have to create a question variable
+  const question = state.questions[state.currQuestion];
+
   switch (action.type) {
     case "dataReceived":
       return {
@@ -45,6 +50,11 @@ function reducer(state, action) {
       return {
         ...state,
         currAnswer: action.payload,
+        points:
+          action.payload ===
+          state.questions[state.currQuestion].question.correctOption
+            ? state.points + question.points
+            : state.points,
       };
     default:
       throw new Error("Action unknown!");

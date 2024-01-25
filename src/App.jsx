@@ -13,9 +13,12 @@ import { useReducer } from "react";
 // 2. centralize the state management
 
 const initialState = {
+  // All questions fetched from json-server
   questions: [],
   // "loading", "error", "ready", "active", "finished"
   status: "loading",
+  // Keep track of the current question, 0-based
+  index: 0,
 };
 
 function reducer(state, action) {
@@ -70,7 +73,9 @@ function App() {
         {state.status === "ready" && (
           <StartScreen questionsNum={questionsNum} dispatch={dispatch} />
         )}
-        {state.status === "active" && <Question />}
+        {state.status === "active" && (
+          <Question question={state.questions[state.index]} />
+        )}
       </Main>
     </div>
   );

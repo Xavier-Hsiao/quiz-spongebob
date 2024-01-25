@@ -18,7 +18,9 @@ const initialState = {
   // "loading", "error", "ready", "active", "finished"
   status: "loading",
   // Keep track of the current question, 0-based
-  index: 0,
+  currQuestion: 0,
+  // Keep track of the current answer, should be an array index
+  currAnswer: null,
 };
 
 function reducer(state, action) {
@@ -38,6 +40,11 @@ function reducer(state, action) {
       return {
         ...state,
         status: "active",
+      };
+    case "newAnswer":
+      return {
+        ...state,
+        currAnswer: action.payload,
       };
     default:
       throw new Error("Action unknown!");
@@ -74,7 +81,11 @@ function App() {
           <StartScreen questionsNum={questionsNum} dispatch={dispatch} />
         )}
         {state.status === "active" && (
-          <Question question={state.questions[state.index]} />
+          <Question
+            question={state.questions[state.currQuestion]}
+            answer={state.currAnswer}
+            dispatch={dispatch}
+          />
         )}
       </Main>
     </div>

@@ -8,6 +8,7 @@ import StartScreen from "./components/StartScreen/StartScreen";
 import Question from "./components/Question/Question";
 import NextButton from "./components/NextButton/NextButton";
 import Progress from "./components/Progress/Progress";
+import FinishScreen from "./components/FinishScreen/FinishScrenn";
 import { useReducer } from "react";
 
 // The reason we use reducer:
@@ -25,6 +26,8 @@ const initialState = {
   currAnswer: null,
   // Keep track of user scores
   points: 0,
+  // Keep track of the highest score
+  highScore: parseInt(localStorage.getItem("highScore"), 10) || 0,
 };
 
 function reducer(state, action) {
@@ -64,6 +67,13 @@ function reducer(state, action) {
         // Prevent the answer shows right after entering the next question
         currAnswer: null,
       };
+    case "finished":
+      return {
+        ...state,
+        status: "finished",
+        highScore:
+          state.points > state.highScore ? state.points : state.highScore,
+      };
     default:
       throw new Error("Action unknown!");
   }
@@ -73,6 +83,7 @@ function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const questionsNum = state.questions.length;
   const maxPoints = state.questions.reduce((prev, cur) => prev + cur.points, 0);
+
   // Handle side effect: fetch questions data
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -89,6 +100,12 @@ function App() {
 
     fetchQuestions();
   }, []);
+
+  // Handle side effect: set highScore to local storage
+  useEffect(() => {
+    console.log("Updating highScore in useEffect:", state.highScore);
+    localStorage.setItem("highScore", JSON.stringify(state.highScore));
+  }, [state.highScore]);
 
   return (
     <div className={styles.app}>
@@ -112,8 +129,20 @@ function App() {
               answer={state.currAnswer}
               dispatch={dispatch}
             />
-            <NextButton dispatch={dispatch} answer={state.currAnswer} />
+            <NextButton
+              dispatch={dispatch}
+              answer={state.currAnswer}
+              questionIndex={state.currQuestion}
+              questionsNum={questionsNum}
+            />
           </>
+        )}
+        {state.status === "finished" && (
+          <FinishScreen
+            maxPoints={maxPoints}
+            points={state.points}
+            highScore={state.highScore}
+          />
         )}
       </Main>
     </div>

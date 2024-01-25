@@ -1,0 +1,27 @@
+@use "../../styles/theme.module.scss";
+
+.progress {
+  display: grid;
+  justify-content: space-between;
+  gap: 1.2rem;
+  grid-template-columns: auto auto;
+  font-size: 1rem;
+  color: theme.$light;
+
+  // This is for HTML progress element
+  progress {
+    appearance: none;
+    width: 100%;
+    height: 12px;
+    grid-column: 1 / -1;
+
+    &::-webkit-progress-bar {
+      background-color: theme.$medium;
+      border-radius: 100px;
+    }
+    &::-webkit-progress-value {
+      background-color: theme.$accent;
+      border-radius: 100px;
+    }
+  }
+}

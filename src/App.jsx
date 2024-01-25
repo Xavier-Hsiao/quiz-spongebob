@@ -6,6 +6,8 @@ import Loader from "./components/Loader/Loader";
 import Error from "./components/Error/Error";
 import StartScreen from "./components/StartScreen/StartScreen";
 import Question from "./components/Question/Question";
+import NextButton from "./components/NextButton/NextButton";
+import Progress from "./components/Progress/Progress";
 import { useReducer } from "react";
 
 // The reason we use reducer:
@@ -51,10 +53,16 @@ function reducer(state, action) {
         ...state,
         currAnswer: action.payload,
         points:
-          action.payload ===
-          state.questions[state.currQuestion].question.correctOption
+          action.payload === question.correctOption
             ? state.points + question.points
             : state.points,
+      };
+    case "nextQuestion":
+      return {
+        ...state,
+        currQuestion: state.currQuestion + 1,
+        // Prevent the answer shows right after entering the next question
+        currAnswer: null,
       };
     default:
       throw new Error("Action unknown!");
@@ -64,6 +72,7 @@ function reducer(state, action) {
 function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const questionsNum = state.questions.length;
+  const maxPoints = state.questions.reduce((prev, cur) => prev + cur.points, 0);
   // Handle side effect: fetch questions data
   useEffect(() => {
     const fetchQuestions = async () => {
@@ -91,11 +100,20 @@ function App() {
           <StartScreen questionsNum={questionsNum} dispatch={dispatch} />
         )}
         {state.status === "active" && (
-          <Question
-            question={state.questions[state.currQuestion]}
-            answer={state.currAnswer}
-            dispatch={dispatch}
-          />
+          <>
+            <Progress
+              questionIndex={state.currQuestion}
+              questionsNum={questionsNum}
+              maxPoints={maxPoints}
+              points={state.points}
+            />
+            <Question
+              question={state.questions[state.currQuestion]}
+              answer={state.currAnswer}
+              dispatch={dispatch}
+            />
+            <NextButton dispatch={dispatch} answer={state.currAnswer} />
+          </>
         )}
       </Main>
     </div>

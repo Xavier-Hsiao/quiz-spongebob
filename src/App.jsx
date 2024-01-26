@@ -42,9 +42,11 @@ function reducer(state, action) {
 
   switch (action.type) {
     case "dataReceived":
+      const { questions } = action.payload;
+      
       return {
         ...state,
-        questions: action.payload,
+        questions,
         status: "ready",
       };
     case "dataFailed":
@@ -108,7 +110,9 @@ function App() {
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
-        const res = await fetch("http://localhost:8000/questions");
+        const res = await fetch(
+          "https://helpful-kleicha-41f04d.netlify.app/.netlify/functions/api"
+        );
         const data = await res.json();
 
         dispatch({ type: "dataReceived", payload: data });

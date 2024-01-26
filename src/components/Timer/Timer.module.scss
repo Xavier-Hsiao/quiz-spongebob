@@ -1,0 +1,11 @@
+@use "../../styles/theme.module.scss";
+
+.timer {
+  padding: .8rem 1.5rem;
+  font-size: 1rem;
+  font-weight: bold;
+  color: theme.$light;
+  border: 2px solid theme.$button;
+  border-radius: 100px;
+  float: left;
+}

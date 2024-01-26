@@ -8,7 +8,9 @@ import StartScreen from "./components/StartScreen/StartScreen";
 import Question from "./components/Question/Question";
 import NextButton from "./components/NextButton/NextButton";
 import Progress from "./components/Progress/Progress";
-import FinishScreen from "./components/FinishScreen/FinishScrenn";
+import FinishScreen from "./components/FinishScreen/FinishScreen";
+import Footer from "./components/Footer/Footer";
+import Timer from "./components/Timer/Timer";
 import { useReducer } from "react";
 
 // The reason we use reducer:
@@ -28,7 +30,11 @@ const initialState = {
   points: 0,
   // Keep track of the highest score
   highScore: parseInt(localStorage.getItem("highScore"), 10) || 0,
+  // Keep track of timer
+  secondsRemaining: 10,
 };
+
+const SECS_PER_QUESTION = 30;
 
 function reducer(state, action) {
   // We only have current question index in state object. But for points increment validation, we have to access to question object in questions array to get the correctOption property. That's why we have to create a question variable
@@ -50,6 +56,7 @@ function reducer(state, action) {
       return {
         ...state,
         status: "active",
+        secondsRemaining: state.questions.length * SECS_PER_QUESTION,
       };
     case "newAnswer":
       return {
@@ -79,6 +86,13 @@ function reducer(state, action) {
         ...initialState,
         questions: state.questions,
         status: "ready",
+      };
+    case "countdown":
+      return {
+        ...state,
+        secondsRemaining: state.secondsRemaining - 1,
+        // Go back to "finished" status once the timer countdowns to 0
+        status: state.secondsRemaining === 0 ? "finished" : state.status,
       };
     default:
       throw new Error("Action unknown!");
@@ -135,12 +149,18 @@ function App() {
               answer={state.currAnswer}
               dispatch={dispatch}
             />
-            <NextButton
-              dispatch={dispatch}
-              answer={state.currAnswer}
-              questionIndex={state.currQuestion}
-              questionsNum={questionsNum}
-            />
+            <Footer>
+              <NextButton
+                dispatch={dispatch}
+                answer={state.currAnswer}
+                questionIndex={state.currQuestion}
+                questionsNum={questionsNum}
+              />
+              <Timer
+                secondsRemaining={state.secondsRemaining}
+                dispatch={dispatch}
+              />
+            </Footer>
           </>
         )}
         {state.status === "finished" && (

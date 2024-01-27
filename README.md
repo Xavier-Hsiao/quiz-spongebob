@@ -66,3 +66,14 @@ $ npm run dev
 - vite ^5.0.8
 - json-server ^1.0.0-alpha.22
 - french-verbs-lefff ^3.3.0
+
+## 📸 Screenshots
+
+### Start Screen
+![start-screen](https://github.com/Xavier-Hsiao/quiz-songebob/blob/master/src/assets/images/quiz-songebob-startscreen.png)
+
+### Active
+![active](https://github.com/Xavier-Hsiao/quiz-songebob/blob/master/src/assets/images/quiz-songebob-active.png)
+
+### Finish Screen
+![end-screen](https://github.com/Xavier-Hsiao/quiz-songebob/blob/master/src/assets/images/quiz-songebob-endscreen.png)

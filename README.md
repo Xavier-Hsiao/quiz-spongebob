@@ -70,10 +70,10 @@ $ npm run dev
 ## 📸 Screenshots
 
 ### Start Screen
-![start-screen](https://github.com/Xavier-Hsiao/quiz-songebob/blob/master/src/assets/images/quiz-songebob-startscreen.png)
+![start-screen](src/assets/quiz-spongebob-startscreen.png)
 
 ### Active
-![active](https://github.com/Xavier-Hsiao/quiz-songebob/blob/master/src/assets/images/quiz-songebob-active.png)
+![active](src/assets/quiz-spongebob-active.png)
 
 ### Finish Screen
-![end-screen](https://github.com/Xavier-Hsiao/quiz-songebob/blob/master/src/assets/images/quiz-songebob-endscreen.png)
+![end-screen](src/assets/quiz-spongebob-endscreen.png)

@@ -1,12 +1,9 @@
+import useQuizContext from "../../contexts/useQuizContext";
 import styles from "./FinishScreen.module.scss";
 
-export default function FinishScreen({
-  points,
-  maxPoints,
-  highScore,
-  dispatch,
-}) {
-  const percentage = (points / maxPoints) * 100;
+export default function FinishScreen() {
+  const {state, maxPoints, dispatch} = useQuizContext();
+  const percentage = (state.points / maxPoints) * 100;
 
   let emoji;
   if (percentage === 100) emoji = "🥇";
@@ -18,10 +15,10 @@ export default function FinishScreen({
   return (
     <>
       <p className={styles.result}>
-        {emoji} 總共 {maxPoints} 分你得到了 {points} 分 ({Math.ceil(percentage)}
+        {emoji} 總共 {maxPoints} 分你得到了 {state.points} 分 ({Math.ceil(percentage)}
         %)
       </p>
-      <p className={styles.highScore}>你的最高分紀錄：{highScore}</p>
+      <p className={styles.highScore}>你的最高分紀錄：{state.highScore}</p>
       <button
         className={styles.btn}
         onClick={() => dispatch({ type: "reset" })}

@@ -1,9 +1,11 @@
 import { useEffect } from "react";
 import styles from "./Timer.module.scss";
+import useQuizContext from "../../contexts/useQuizContext";
 
-export default function Timer({ secondsRemaining, dispatch }) {
-  const mins = Math.floor(secondsRemaining / 60);
-  const secs = secondsRemaining % 60;
+export default function Timer() {
+  const {state, dispatch} = useQuizContext();
+  const mins = Math.floor(state.secondsRemaining / 60);
+  const secs = state.secondsRemaining % 60;
   // Handle side effect: start running countdown right after Timer was mounted
   useEffect(() => {
     const interval = setInterval(() => {

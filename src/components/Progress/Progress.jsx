@@ -1,22 +1,19 @@
+import useQuizContext from "../../contexts/useQuizContext";
 import styles from "./Progress.module.scss";
 
-export default function Progress({
-  questionIndex,
-  questionsNum,
-  points,
-  maxPoints,
-}) {
+export default function Progress() {
+  const {state, questionsNum, maxPoints} = useQuizContext();
   return (
     <header className={styles.progress}>
-      <progress max={maxPoints} value={points}></progress>
+      <progress max={maxPoints} value={state.points}></progress>
       <p>
         答題數：
         <strong>
-          {questionIndex + 1} / {questionsNum}
+          {state.currQuestion + 1} / {questionsNum}
         </strong>
       </p>
       <p>
-        {points} / {maxPoints}
+        {state.points} / {maxPoints}
       </p>
     </header>
   );
